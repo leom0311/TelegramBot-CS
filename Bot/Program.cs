@@ -54,6 +54,10 @@ namespace Bot
                     {
                         Bot.SendTextMessageAsync(e.Message.Chat.Id,p.quote.USD.price.ToString()+" USD");
                     }
+                    else
+                    {
+                        Bot.SendTextMessageAsync(e.Message.Chat.Id,"Crytovalue doesn't exist. Please try again!");
+                    }
                 }
             }
         }
