@@ -10,14 +10,15 @@ using Bot.ScheduleServices;
 using Bot.Commands;
 using System.Threading.Tasks;
 using Telegram.Bot.Args;
+using Microsoft.AspNetCore.Mvc;
+using Bot.Configs;
 
 namespace Bot
 {
     public class Program
     {
-        static private string Token { get; } = "5240186629:AAFD3-VZxhpuFaeJt5kxURliyjuYe00J66w";
-
-        static readonly TelegramBotClient Bot = new TelegramBotClient(Token);
+        static private string Token { get; } = Config.getToken("Token");
+        static TelegramBotClient Bot = new TelegramBotClient(Token);
         [Obsolete]
         static void  Main(string[] args)
         {
@@ -25,12 +26,12 @@ namespace Bot
             Bot.OnMessage += Bot_OnMessage;
             Console.ReadLine();
         }
-
         [Obsolete]
         public  static void Bot_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
             string text = e.Message.Text;
-            switch (text)
+            string keyword = text.Split(' ')[0];
+            switch (keyword)
             {
                 case "/price":
                     ReplyKeyboardMarkup rkm = BotOperation.OrderCrypto();
@@ -40,12 +41,9 @@ namespace Bot
                         replyMarkup: rkm);
                     break;
                 case "/reminder":
-                    ////string msg = BotOperation.ReminderPrice(text);
-                    ///Eslinde problem burdadir reminderPrice methodu staticdi ama schedule classi dependency enjection olunub ona gore
-                    ///de cagira bilmirem. Meqsed de oduki reminderPrice methodunda schedule islesin bitenden sonra hansi ki reminderin
-                    ///vaxti catanda messaj gondersin ona gore orda async/await olunub. So bele:)
-                    string msg = ""; 
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, msg);
+                    Bot.SendTextMessageAsync(e.Message.Chat.Id,"Your reminder setted.");
+                    var msg = BotOperation.ReminderPrice(text);
+                    Bot.SendTextMessageAsync(e.Message.Chat.Id, msg.Result.ToString());
                     break;
                 default:
                     string price = BotOperation.SendPrice(text);

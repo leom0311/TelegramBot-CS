@@ -11,11 +11,6 @@ namespace Bot.Commands
 {
     class BotOperation
     {
-        private readonly Schedule _services;
-        BotOperation(Schedule schedule)
-        {
-            _services = schedule;
-        }
         public static ReplyKeyboardMarkup OrderCrypto()
         {
             CryptoData crypto = BotCommand.AllCrypto();
@@ -44,7 +39,7 @@ namespace Bot.Commands
                 return price;
             }
         }
-        public static async Task<string> ReminderPrice(string text)
+        public static  async Task<string> ReminderPrice(string text)
         {
             string[] words = text.Split(' ');
             string slug = words[1];
@@ -53,8 +48,16 @@ namespace Bot.Commands
             {
                 return "Please try again";
             }
-            await _services.SchedulJob(slug,price);
-            return "Congrulatulation!!! Your cryptovalue achive your goal.Come back.";
+            var result = await Schedule.SchedulJob(slug,price);
+            Console.WriteLine(result);
+            if(result==false)
+            {
+                return $"Congrulatulation!!! Your cryptovalue {slug} achive your goal {price} USD.Come back.";
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }

@@ -13,13 +13,13 @@ namespace Bot.Services
 {
     class Api
     {
-        static private string API_KEY { get; } = "cb2ac294-d395-4788-8302-2286c00db261";
+        static private string API_KEY { get; } = Config.getToken("API_KEY");
+        static private string API_URL { get; } = Config.getToken("API_URL");
         public static CryptoData MakeRequestAll()
         {
-            string header = API_KEY;
-            var URL = new UriBuilder("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest");
+            var URL = new UriBuilder(API_URL);
             var client = new WebClient();
-            client.Headers.Add("X-CMC_PRO_API_KEY", header);
+            client.Headers.Add("X-CMC_PRO_API_KEY", API_KEY);
             client.Headers.Add("Accepts", "application/json");
             var result = client.DownloadString(URL.ToString());
             return JsonConvert.DeserializeObject<CryptoData>(result);
@@ -27,10 +27,9 @@ namespace Bot.Services
 
         public static string makeRequestById(string slug)
         {
-            string header = API_KEY;
-            var URL = new UriBuilder("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest");
+            var URL = new UriBuilder(API_URL);
             var client = new WebClient();
-            client.Headers.Add("X-CMC_PRO_API_KEY", header);
+            client.Headers.Add("X-CMC_PRO_API_KEY", API_KEY);
             client.Headers.Add("Accepts", "application/json");
             var result = client.DownloadString(URL.ToString());
             CryptoData obj =  JsonConvert.DeserializeObject<CryptoData>(result);

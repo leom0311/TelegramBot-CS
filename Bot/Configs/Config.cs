@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,15 @@ namespace Bot.Configs
 {
     public class Config
     {
-        public  const string Configs = "Config";
-        public string Token { get; set; }
-        public string API_KEY { get; set; }
+        public static string getToken(string type)
+        {
+            var builder = new ConfigurationBuilder()
+                        .AddJsonFile($"appsettings.json", true, true);
 
-       
+            var config = builder.Build();
+            string Token = config[$"Config:{type}"].ToString();
+            return Token;
+        }       
     }
 
 }
