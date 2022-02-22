@@ -24,7 +24,7 @@ namespace Bot.Commands
         public static bool Reminder(string slug,decimal price)
         {
             string prices = Api.makeRequestById(slug);
-            if(Convert.ToDecimal(prices.Split('.')[0]) < price)
+            if(Convert.ToDecimal(prices.Split('.')[0]) == price)
             {
                 return true;
             }

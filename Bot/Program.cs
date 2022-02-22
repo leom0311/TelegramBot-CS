@@ -30,7 +30,7 @@ namespace Bot
         public  static void Bot_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
             string text = e.Message.Text;
-            string keyword = text.Split(' ')[0];
+            string keyword = text?.Split(' ')[0];
             switch (keyword)
             {
                 case "/price":
