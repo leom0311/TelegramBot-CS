@@ -1,16 +1,16 @@
-﻿using Bot.DTOs;
-using Bot.ScheduleServices;
+﻿using Bot.Data;
+using Bot.DTOs;
+using Bot.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Bot.Commands
-{
+{  
     class BotOperation
     {
+
         public static ReplyKeyboardMarkup OrderCrypto()
         {
             CryptoData crypto = BotCommand.AllCrypto();
@@ -39,23 +39,19 @@ namespace Bot.Commands
                 return price;
             }
         }
-        public static  async Task<string> ReminderPrice(string text)
+        public static async Task<string> ReminderPrice(long chatId,string text)
         {
             string[] words = text.Split(' ');
             string slug = words[1];
             decimal price = Convert.ToDecimal(words[2]);
             if (slug == null || slug == "" || price == 0)
             {
-                return "Please try again";
+                return "Please write correct";
             }
-            var result = await Schedule.SchedulJob(slug,price);
-            Console.WriteLine(result);
-            if(result==false)
+            using (SqliteDbContext database = new SqliteDbContext())
             {
-                return $"Congrulatulation!!! Your cryptovalue {slug} achive your goal {price} USD.Come back.";
-            }
-            else
-            {
+                await database.AddAsync(new Reminder() { UserId = chatId, CryptoName = slug, ExceptionPrice = price, CompliteStatus = false });
+                await database.SaveChangesAsync();
                 return "";
             }
         }

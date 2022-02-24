@@ -10,7 +10,6 @@ using Bot.ScheduleServices;
 using Bot.Commands;
 using System.Threading.Tasks;
 using Telegram.Bot.Args;
-using Microsoft.AspNetCore.Mvc;
 using Bot.Configs;
 
 namespace Bot
@@ -20,8 +19,9 @@ namespace Bot
         static private string Token { get; } = Config.getToken("Token");
         static TelegramBotClient Bot = new TelegramBotClient(Token);
         [Obsolete]
-        static void  Main(string[] args)
+        static async Task  Main(string[] args)
         {
+            await Schedule.SchedulJob();
             Bot.StartReceiving();
             Bot.OnMessage += Bot_OnMessage;
             Console.ReadLine();
@@ -41,11 +41,11 @@ namespace Bot
                         replyMarkup: rkm);
                     break;
                 case "/reminder":
+                    var msg = BotOperation.ReminderPrice(e.Message.Chat.Id,text);
                     Bot.SendTextMessageAsync(e.Message.Chat.Id,"Your reminder setted.");
-                    var msg = BotOperation.ReminderPrice(text);
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, msg.Result.ToString());
                     break;
                 default:
+                    Console.WriteLine(e.Message.Chat.Id);
                     string price = BotOperation.SendPrice(text);
                     Bot.SendTextMessageAsync(e.Message.Chat.Id, price);
                     break;
