@@ -21,8 +21,8 @@ namespace Bot
         [Obsolete]
         static async Task  Main(string[] args)
         {
-            await Schedule.SchedulJob();
             Bot.StartReceiving();
+            await Schedule.SchedulJob(Bot);
             Bot.OnMessage += Bot_OnMessage;
             Console.ReadLine();
         }

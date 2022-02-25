@@ -5,15 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Quartz;
 using Quartz.Impl;
+using Telegram.Bot;
+
 namespace Bot.ScheduleServices
 {
     public class Schedule
     {
-        public static async Task SchedulJob()
+        public static async Task SchedulJob(TelegramBotClient bot)
         {
             StdSchedulerFactory factory = new StdSchedulerFactory();
             IScheduler scheduler = await factory.GetScheduler();
             await scheduler.Start();
+            scheduler.Context.Put("bot",bot);
             IJobDetail job = JobBuilder.Create<JobApi>()
                .WithIdentity("jobName", "jobGroup")
                .Build();
@@ -21,7 +24,7 @@ namespace Bot.ScheduleServices
                 .WithIdentity("triggerName", " triggerGorup")
                 .StartNow()
                 .WithSimpleSchedule(x => x
-                    .WithIntervalInSeconds(10)
+                    .WithIntervalInMinutes(10)
                     .RepeatForever())
                 .Build();
 

@@ -42,11 +42,19 @@ namespace Bot.Commands
         public static async Task<string> ReminderPrice(long chatId,string text)
         {
             string[] words = text.Split(' ');
-            string slug = words[1];
-            decimal price = Convert.ToDecimal(words[2]);
-            if (slug == null || slug == "" || price == 0)
+            if(words.Length != 3)
             {
                 return "Please write correct";
+            }
+            string slug = words[1];
+            decimal price;
+            try
+            {
+               price = Convert.ToDecimal(words[2]);
+            }
+            catch (Exception)
+            {
+                return "Please write correct price";
             }
             using (SqliteDbContext database = new SqliteDbContext())
             {
