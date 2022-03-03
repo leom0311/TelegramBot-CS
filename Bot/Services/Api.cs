@@ -17,14 +17,14 @@ namespace Bot.Services
         static private string API_URL { get; } = Config.getToken("API_URL");
         public static CryptoData GetAllCrypto()
         {
-            //var URL = new UriBuilder(API_URL);
-            //var client = new WebClient();
-            //client.Headers.Add("X-CMC_PRO_API_KEY", API_KEY);
-            //client.Headers.Add("Accepts", "application/json");
-            //var result = client.DownloadString(URL.ToString());
-            //return JsonConvert.DeserializeObject<CryptoData>(result);
-            var data = ServiceApi.GetCrypto(API_KEY);
-            return data.Result;
+            var URL = new UriBuilder(API_URL);
+            var client = new WebClient();
+            client.Headers.Add("X-CMC_PRO_API_KEY", API_KEY);
+            client.Headers.Add("Accepts", "application/json");
+            var result = client.DownloadString(URL.ToString());
+            return JsonConvert.DeserializeObject<CryptoData>(result);
+            //var data = ServiceApi.GetCrypto(API_KEY);
+            //return data.Result;
         }
 
         public static string GetCryptoPriceBySlug(string slug)
