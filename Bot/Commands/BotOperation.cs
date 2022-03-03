@@ -27,6 +27,7 @@ namespace Bot.Commands
             rkm.Keyboard = rows.ToArray();
             return rkm;
         }
+
         public static string SendPrice(string slug)
         {
             string price = BotCommand.GetPrice(slug);
@@ -39,6 +40,7 @@ namespace Bot.Commands
                 return price;
             }
         }
+
         public static async Task<string> ReminderPrice(long chatId,string text)
         {
             string[] words = text.Split(' ');
@@ -60,7 +62,7 @@ namespace Bot.Commands
             {
                 await database.AddAsync(new Reminder() { UserId = chatId, CryptoName = slug, ExceptionPrice = price, CompliteStatus = false });
                 await database.SaveChangesAsync();
-                return "";
+                return "Your reminder setted.";
             }
         }
     }

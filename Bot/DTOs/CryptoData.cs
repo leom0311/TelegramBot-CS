@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Bot.DTOs
 {
-        public class CryptoData
-        {
-            public List<Crypto> Data { get; set; }
-        }
+
+    public class CryptoData
+    {
+        public List<Crypto> Data { get; set; }
+    }
 }
 

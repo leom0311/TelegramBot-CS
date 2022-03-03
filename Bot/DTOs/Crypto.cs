@@ -14,9 +14,6 @@ namespace Bot.DTOs
         public string symbol { get; set; }
         public DateTime date_added { get; set; }
         public string num_market_pairs { get; set; }
-        //public double max_supply { get; set; }
-        //public double total_supply { get; set; }
-        //public double cmc_rank { get; set; }
         public DateTime last_updated { get; set; }
         public USDs quote { get; set; }
     }

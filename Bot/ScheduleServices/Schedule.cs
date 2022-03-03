@@ -28,7 +28,6 @@ namespace Bot.ScheduleServices
                     .RepeatForever())
                 .Build();
 
-            // Tell quartz to schedule the job using our trigger
             await scheduler.ScheduleJob(job, trigger);
         }
     }

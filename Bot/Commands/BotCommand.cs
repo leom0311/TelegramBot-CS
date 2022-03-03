@@ -8,26 +8,23 @@ namespace Bot.Commands
     {
         public static CryptoData AllCrypto()
         {
-            CryptoData cryptoData = Api.MakeRequestAll();
+            CryptoData cryptoData = Api.GetAllCrypto();
             return cryptoData;
         }
         public  static string GetPrice(string slug)
         {
-            string price = Api.makeRequestById(slug);
+            string price = Api.GetCryptoPriceBySlug(slug);
             string result = price+" USD";
             return result;
         }
         public static bool Reminder(string slug,decimal price)
         {
-            string prices = Api.makeRequestById(slug);
-            if(Convert.ToDecimal(prices) > price)
+            string prices = Api.GetCryptoPriceBySlug(slug);
+            if(Convert.ToDecimal(prices) >= price)
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 }

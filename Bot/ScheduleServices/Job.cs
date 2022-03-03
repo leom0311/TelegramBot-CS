@@ -19,7 +19,7 @@ namespace Bot.ScheduleServices
         [Obsolete]
         public  async Task Execute(IJobExecutionContext context)
         {
-            Console.WriteLine("started");
+            Console.WriteLine("Started...");
             var schedulerContext = context.Scheduler.Context;
             var bot = (TelegramBotClient)schedulerContext.Get("bot");
             using (SqliteDbContext db = new SqliteDbContext())
@@ -32,7 +32,7 @@ namespace Bot.ScheduleServices
                         bool result = Commands.BotCommand.Reminder(reminderItem.CryptoName, reminderItem.ExceptionPrice);
                         if (result == true)
                         {
-                            await Console.Out.WriteLineAsync("Finded");
+                            await Console.Out.WriteLineAsync("Found");
                             reminderItem.CompliteStatus = true;
                             await db.SaveChangesAsync();
                             Message message = await bot.SendTextMessageAsync(reminderItem.UserId, $"Congrultalation " +
@@ -40,10 +40,10 @@ namespace Bot.ScheduleServices
                         }
                         else
                         {
-                            await Console.Out.WriteLineAsync("Checking");
+                            await Console.Out.WriteLineAsync("Checking...");
                         }
                     }
-                    else
+                    if(reminderItem.CompliteStatus == true)
                     {
                         db.Remove(reminderItem);
                         await db.SaveChangesAsync();
