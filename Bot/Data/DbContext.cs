@@ -12,6 +12,7 @@ namespace Bot.Data
     public class SqliteDbContext : DbContext
     {
         public DbSet<Reminder> Reminders { get; set; }
+        public DbSet<Tracker> Trackers { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=ReminderData.db");

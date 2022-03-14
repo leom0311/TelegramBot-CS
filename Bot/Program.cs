@@ -42,6 +42,16 @@ namespace Bot
                         "Choose one of these cryptovalues",
                         replyMarkup: rkm);
                     break;
+          
+                case "/track-address":
+                    string trackerInfo = BotOperation.TrackAddress(e.Message.Chat.Id,text).Result;
+                    Bot.SendTextMessageAsync(e.Message.Chat.Id, trackerInfo);
+                    break;
+
+                case "/balance":
+                    string addressBalance = BotOperation.BalanceAddress(text);
+                    Bot.SendTextMessageAsync(e.Message.Chat.Id,addressBalance);
+                    break;
                 
                 case "/reminder":
                     var msg = BotOperation.ReminderPrice(e.Message.Chat.Id, text);
