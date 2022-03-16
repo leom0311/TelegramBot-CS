@@ -16,8 +16,8 @@ namespace Bot.Services
     {
         static private string API_KEY { get; } = Config.getToken("API_KEY");
         static private string API_URL { get; } = Config.getToken("API_URL");
-        static private string ETH_API_URL { get; } = Config.getToken("ETH_API_URL");
-        static private string ETH_API_KEY { get; } = Config.getToken("ETH_API_KEY");
+        //static private string ETH_API_URL { get; } = Config.getToken("ETH_API_URL");
+        //static private string ETH_API_KEY { get; } = Config.getToken("ETH_API_KEY");
 
         public static CryptoData GetAllCrypto()
         {
@@ -45,15 +45,15 @@ namespace Bot.Services
             return "Doesn't found";
         }
 
-        public static Balances GetEthBalanceOfAddress(string address)
-        {
-            var URL = new UriBuilder(ETH_API_URL+$"/api?module=account&action=balance&" +
-                $"address={address}&tag=latest&apikey={ETH_API_KEY}");
-            var client = new WebClient();
-            client.Headers.Add("Accepts", "application/json");
-            var result = client.DownloadString(URL.ToString());
-            return JsonConvert.DeserializeObject<Balances>(result);
-        }
+        //public static Balances GetEthBalanceOfAddress(string address)
+        //{
+        //    var URL = new UriBuilder(ETH_API_URL+$"/api?module=account&action=balance&" +
+        //        $"address={address}&tag=latest&apikey={ETH_API_KEY}");
+        //    var client = new WebClient();
+        //    client.Headers.Add("Accepts", "application/json");
+        //    var result = client.DownloadString(URL.ToString());
+        //    return JsonConvert.DeserializeObject<Balances>(result);
+        //}
 
         //public static AddressTracker GetEthTransaction(string address)
         //{
