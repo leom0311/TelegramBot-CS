@@ -55,17 +55,17 @@ namespace Bot.Services
             return JsonConvert.DeserializeObject<Balances>(result);
         }
 
-        public static AddressTracker GetEthTransaction(string address)
-        {
-            var URL = new UriBuilder(ETH_API_URL + $"/api?module=account&action=txlist" +
-                $"&address={address}&startblock=0&endblock=99999999&page=10" +
-                $"&offset=1&sort=asc" +
-                $"&tag=latest&apikey={ETH_API_KEY}");
-            var client = new WebClient();
-            client.Headers.Add("Accepts", "application/json");
-            var result = client.DownloadString(URL.ToString());
-            Console.WriteLine(result.ToString());
-            return JsonConvert.DeserializeObject<AddressTracker>(result);
-        }
+        //public static AddressTracker GetEthTransaction(string address)
+        //{
+        //    var URL = new UriBuilder(ETH_API_URL + $"/api?module=account&action=txlist" +
+        //        $"&address={address}&startblock=0&endblock=99999999&page=10" +
+        //        $"&offset=1&sort=asc" +
+        //        $"&tag=latest&apikey={ETH_API_KEY}");
+        //    var client = new WebClient();
+        //    client.Headers.Add("Accepts", "application/json");
+        //    var result = client.DownloadString(URL.ToString());
+        //    Console.WriteLine(result.ToString());
+        //    return JsonConvert.DeserializeObject<AddressTracker>(result);
+        //}
     }
 }

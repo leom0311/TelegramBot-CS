@@ -17,6 +17,7 @@ namespace Bot.ScheduleServices
             IScheduler scheduler = await factory.GetScheduler();
             await scheduler.Start();
             scheduler.Context.Put("bot",bot);
+            
             IJobDetail job = JobBuilder.Create<JobApi>()
                .WithIdentity("jobName", "jobGroup")
                .Build();
@@ -28,6 +29,18 @@ namespace Bot.ScheduleServices
                     .RepeatForever())
                 .Build();
 
+            IJobDetail job2 = JobBuilder.Create<TransactionWatchingJob>()
+               .WithIdentity("jobName1", "jobGroup1")
+               .Build();
+            ITrigger trigger2 = TriggerBuilder.Create()
+                .WithIdentity("triggerName1", " triggerGorup1")
+                .StartNow()
+                .WithSimpleSchedule(x => x
+                    .WithIntervalInSeconds(5)
+                    .RepeatForever())
+                .Build();
+
+            await scheduler.ScheduleJob(job2, trigger2);
             await scheduler.ScheduleJob(job, trigger);
         }
     }

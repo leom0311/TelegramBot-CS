@@ -49,7 +49,7 @@ namespace Bot
                     break;
 
                 case "/balance":
-                    string addressBalance = BotOperation.BalanceAddress(text);
+                    string addressBalance = BotOperation.BalanceAddress(e.Message.Chat.Id);
                     Bot.SendTextMessageAsync(e.Message.Chat.Id,addressBalance);
                     break;
                 

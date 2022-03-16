@@ -27,34 +27,21 @@ namespace Bot.Commands
             }
             return false;
         }
-        public static bool TrackerAdd(string address)
+        public static AddressInfo TrackerAdd(string address)
         {
-           string transaction = BlockWeb3.GetAddressTrack(address).Result;
-           if(transaction == null)
+            string transaction = BlockWeb3.GetAddressTrack(address).Result;
+            AddressInfo info = new AddressInfo() { Status = true, Msg = transaction };
+            Console.WriteLine("INFO: "+ info.Msg);
+            if (transaction == "")
             {
-                return false;
+                info.Status = false;
             }
-            return true;
+            return info;
         }
-        public static string GetBalance(string type, string address)
+        public static string GetBalance(string address)
         {
-            string balance;
-            switch (type)
-            {
-                case "ETH":
-                    string price = BlockWeb3.GetBalance(address).Result;
-                    balance = price.Substring(0, price.Length - 18) + "." +
-                        price.Substring(price.Length - 18);
-                    break;
-                case "BTC":
-                    balance = "21312";
-                    break;
-                default:
-                    balance = "Please choose ETH or BTC correctly";
-                    break;
-            }
-            Console.WriteLine(balance.Length);
-            return balance;
+            string price = BlockWeb3.GetBalance(address).Result;
+            return address + " balance is " +price + " ETH";
         }
     }
 }

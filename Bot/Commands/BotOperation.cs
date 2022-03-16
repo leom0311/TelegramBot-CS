@@ -2,6 +2,7 @@
 using Bot.DTOs;
 using Bot.Model;
 using Bot.Services;
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -84,20 +85,20 @@ namespace Bot.Commands
            
         }
 
-        public static  string BalanceAddress(string text)
+        public static  string BalanceAddress(long id)
         {
-            string[] words = text.Split(' ');
-            if (words.Length != 3)
-            {
-                return "Please write correct";
-            }
-            string type = words[1];
-            string address = words[2];
+            string price = "";
             using(SqliteDbContext db = new SqliteDbContext())
             {
+                var addresses = from cust in db.Trackers
+                              where cust.UserId == id
+                              select cust;
+                foreach(var address in addresses)
+                {
+                    price += BotCommand.GetBalance(address.Address) + "\r\n";
+                }
             }
-            string price = Convert.ToString(BotCommand.GetBalance(type,address));
-            return price + " " + type;
+            return price;
         }
     }
 }
