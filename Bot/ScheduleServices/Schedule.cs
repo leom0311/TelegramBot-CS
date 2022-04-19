@@ -21,6 +21,7 @@ namespace Bot.ScheduleServices
             IJobDetail job = JobBuilder.Create<JobApi>()
                .WithIdentity("jobName", "jobGroup")
                .Build();
+
             ITrigger trigger = TriggerBuilder.Create()
                 .WithIdentity("triggerName", " triggerGorup")
                 .StartNow()
@@ -32,6 +33,7 @@ namespace Bot.ScheduleServices
             IJobDetail job2 = JobBuilder.Create<TransactionWatchingJob>()
                .WithIdentity("jobName1", "jobGroup1")
                .Build();
+
             ITrigger trigger2 = TriggerBuilder.Create()
                 .WithIdentity("triggerName1", " triggerGorup1")
                 .StartNow()

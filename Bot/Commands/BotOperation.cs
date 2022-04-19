@@ -1,15 +1,16 @@
 ﻿using Bot.Data;
 using Bot.DTOs;
 using Bot.Model;
-using Bot.Services;
 using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot.Types.ReplyMarkups;
+using System.Drawing;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Bot.Commands
-{  
+{
     class BotOperation
     {
 
@@ -83,6 +84,27 @@ namespace Bot.Commands
             }
             return "Your address watching...";
            
+        }
+
+        public static string DrawGraph()
+        {
+            var chart = new Chart();
+            chart.Size = new Size(640, 320);
+            chart.ChartAreas.Add("ChartArea1");
+            chart.Legends.Add("legend1");
+            chart.Series.Add("line");
+            chart.Series["line"].LegendText = "Graph";
+            chart.Series["line"].ChartType = SeriesChartType.Line;
+            //Bu hisse bele yox API dnn data gelecek bunu islede bilmirem d
+            //deye APIden datani cekib vermirem Yoxlama meqsedli bele x,y
+            //verirem.
+            for (double x = 0; x < 3 * Math.PI; x += 0.01)
+            {
+                chart.Series["line"].Points.AddXY(x, x + 4);
+            }
+            Guid path_url = Guid.NewGuid();
+            chart.SaveImage(path_url.ToString()+".png", System.Drawing.Imaging.ImageFormat.Png);
+            return "/"+path_url.ToString() +".png";
         }
 
         public static  string BalanceAddress(long id)

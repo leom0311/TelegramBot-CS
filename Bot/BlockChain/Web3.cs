@@ -19,6 +19,7 @@ namespace Bot.BlockChain
             var balanceInEther = Web3.Convert.FromWei(balance.Value);
             return balanceInEther.ToString();
         }
+
         public static async Task<string> GetAddressTrack(string address)
         {
             string result = "";
@@ -35,7 +36,5 @@ namespace Bot.BlockChain
         }
 
     }
-
-
 
 }

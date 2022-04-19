@@ -34,7 +34,11 @@ namespace Bot
                         "Our services: \r\n" + "/price - list of price \r\n" + "/[cryptoname] - price of cryptovalue \r\n" +
                         "/reminder [cryptoname] [expected price] - remind when crypto value will be higher than expected price \r\n");
                     break;
-                
+                case "/graph":
+                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Your Graphic is loading...");
+                    string image = BotOperation.DrawGraph();
+                    Bot.SendPhotoAsync(e.Message.Chat.Id, image);
+                    break;
                 case "/price":
                     ReplyKeyboardMarkup rkm = BotOperation.OrderCrypto();
                     Bot.SendTextMessageAsync(
@@ -43,12 +47,12 @@ namespace Bot
                         replyMarkup: rkm);
                     break;
           
-                case "/track-address":
+                case "/subscribe-to-wallet":
                     string trackerInfo = BotOperation.TrackAddress(e.Message.Chat.Id,text).Result;
                     Bot.SendTextMessageAsync(e.Message.Chat.Id, trackerInfo);
                     break;
 
-                case "/balance":
+                case "/balances":
                     string addressBalance = BotOperation.BalanceAddress(e.Message.Chat.Id);
                     Bot.SendTextMessageAsync(e.Message.Chat.Id,addressBalance);
                     break;
