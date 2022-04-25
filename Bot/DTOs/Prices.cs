@@ -9,9 +9,12 @@ namespace Bot.DTOs
     public class PriceInfo
     {
         public decimal price { get; set; }
-        public decimal volume_24h { get; set; }
-        public decimal volume_change_24h { get; set; }
         public decimal percent_change_1h { get; set; }
-        public decimal market_cap { get; set; }
+        public decimal percent_change_24h { get; set; }
+        public decimal percent_change_7d { get; set; }
+        public decimal percent_change_30d { get; set; }
+        public decimal percent_change_60d { get; set; }
+        public decimal percent_change_90d { get; set; }
+
     } 
 }

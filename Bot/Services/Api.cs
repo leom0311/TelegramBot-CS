@@ -44,28 +44,24 @@ namespace Bot.Services
             }
             return "Doesn't found";
         }
-
-        //public static Balances GetEthBalanceOfAddress(string address)
-        //{
-        //    var URL = new UriBuilder(ETH_API_URL+$"/api?module=account&action=balance&" +
-        //        $"address={address}&tag=latest&apikey={ETH_API_KEY}");
-        //    var client = new WebClient();
-        //    client.Headers.Add("Accepts", "application/json");
-        //    var result = client.DownloadString(URL.ToString());
-        //    return JsonConvert.DeserializeObject<Balances>(result);
-        //}
-
-        //public static AddressTracker GetEthTransaction(string address)
-        //{
-        //    var URL = new UriBuilder(ETH_API_URL + $"/api?module=account&action=txlist" +
-        //        $"&address={address}&startblock=0&endblock=99999999&page=10" +
-        //        $"&offset=1&sort=asc" +
-        //        $"&tag=latest&apikey={ETH_API_KEY}");
-        //    var client = new WebClient();
-        //    client.Headers.Add("Accepts", "application/json");
-        //    var result = client.DownloadString(URL.ToString());
-        //    Console.WriteLine(result.ToString());
-        //    return JsonConvert.DeserializeObject<AddressTracker>(result);
-        //}
+        public static List<double> GetChangesBySlug(string slug)
+        {
+            CryptoData obj = GetAllCrypto();
+            Console.Write("Requesting...");
+            List<double> result = new List<double>();
+            foreach(Crypto item in obj.Data)
+            {
+                if(item.slug == slug)
+                {
+                    result.Add(Decimal.ToDouble(item.quote.USD.percent_change_1h));
+                    result.Add(Decimal.ToDouble(item.quote.USD.percent_change_24h));
+                    result.Add(Decimal.ToDouble(item.quote.USD.percent_change_7d));
+                    result.Add(Decimal.ToDouble(item.quote.USD.percent_change_30d));
+                    result.Add(Decimal.ToDouble(item.quote.USD.percent_change_60d));
+                    result.Add(Decimal.ToDouble(item.quote.USD.percent_change_90d));
+                }
+            }
+            return result;
+        }
     }
 }

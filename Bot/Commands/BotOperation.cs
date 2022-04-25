@@ -6,8 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot.Types.ReplyMarkups;
-using System.Drawing;
-using System.Windows.Forms.DataVisualization.Charting;
+using Bot.Services;
 
 namespace Bot.Commands
 {
@@ -86,25 +85,20 @@ namespace Bot.Commands
            
         }
 
-        public static string DrawGraph()
+        public static string DrawGraph(string slug)
         {
-            var chart = new Chart();
-            chart.Size = new Size(640, 320);
-            chart.ChartAreas.Add("ChartArea1");
-            chart.Legends.Add("legend1");
-            chart.Series.Add("line");
-            chart.Series["line"].LegendText = "Graph";
-            chart.Series["line"].ChartType = SeriesChartType.Line;
-            //Bu hisse bele yox API dnn data gelecek bunu islede bilmirem d
-            //deye APIden datani cekib vermirem Yoxlama meqsedli bele x,y
-            //verirem.
-            for (double x = 0; x < 3 * Math.PI; x += 0.01)
-            {
-                chart.Series["line"].Points.AddXY(x, x + 4);
-            }
+
+            double[] xs = { 1, 2, 3, 4, 5 ,6};
+            string[] words = slug.Split(' ');
+
+            double[] ys = Api.GetChangesBySlug(words[1]).ToArray();
+            var plt = new ScottPlot.Plot(400, 300);
+            plt.AddScatter(xs, ys);
             Guid path_url = Guid.NewGuid();
-            chart.SaveImage(path_url.ToString()+".png", System.Drawing.Imaging.ImageFormat.Png);
-            return "/"+path_url.ToString() +".png";
+            Console.WriteLine(path_url);
+            plt.SaveFig("Trade_images/"+ path_url.ToString() + ".png");
+            string prePath = @"C:\\Users\\HP\\source\\repos\\Bot\\Bot\\Trade_images\\";
+            return prePath+path_url.ToString()+".png";
         }
 
         public static  string BalanceAddress(long id)

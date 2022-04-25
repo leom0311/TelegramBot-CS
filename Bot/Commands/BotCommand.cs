@@ -34,7 +34,6 @@ namespace Bot.Commands
         {
             string transaction = BlockWeb3.GetAddressTrack(address).Result;
             AddressInfo info = new AddressInfo() { Status = true, Msg = transaction };
-            Console.WriteLine("INFO: "+ info.Msg);
             if (transaction == "")
             {
                 info.Status = false;
@@ -45,7 +44,12 @@ namespace Bot.Commands
         public static string GetBalance(string address)
         {
             string price = BlockWeb3.GetBalance(address).Result;
-            return address + " balance is " +price + " ETH";
+            return address + " balance is " + price + " ETH";
+        }
+        public static double[] GetChanges(string slug)
+        {
+            string[] words = slug.Split(' ');
+            return Api.GetChangesBySlug(words[1]).ToArray();
         }
     }
 }

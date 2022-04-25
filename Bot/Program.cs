@@ -5,6 +5,7 @@ using Bot.ScheduleServices;
 using Bot.Commands;
 using System.Threading.Tasks;
 using Bot.Configs;
+using System.IO;
 
 namespace Bot
 {
@@ -36,8 +37,13 @@ namespace Bot
                     break;
                 case "/graph":
                     Bot.SendTextMessageAsync(e.Message.Chat.Id, "Your Graphic is loading...");
-                    string image = BotOperation.DrawGraph();
-                    Bot.SendPhotoAsync(e.Message.Chat.Id, image);
+                    string image = BotOperation.DrawGraph(text);
+                    Console.WriteLine(image);
+                    var FileUrl = image;
+                    using (var stream = File.Open(FileUrl, FileMode.Open))
+                    {
+                        Bot.SendPhotoAsync(e.Message.Chat.Id,stream, "The trade represent 1-90 days changes");
+                    }
                     break;
                 case "/price":
                     ReplyKeyboardMarkup rkm = BotOperation.OrderCrypto();
