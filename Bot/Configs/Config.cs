@@ -13,7 +13,6 @@ namespace Bot.Configs
         {
             var builder = new ConfigurationBuilder()
                         .AddJsonFile($"appsettings.json", true, true);
-
             var config = builder.Build();
             string Token = config[$"Config:{type}"].ToString();
             return Token;

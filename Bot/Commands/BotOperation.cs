@@ -90,10 +90,9 @@ namespace Bot.Commands
 
             double[] xs = { 1, 2, 3, 4, 5 ,6};
             string[] words = slug.Split(' ');
-
             double[] ys = Api.GetChangesBySlug(words[1]).ToArray();
             var plt = new ScottPlot.Plot(400, 300);
-            plt.AddScatter(xs, ys);
+            plt.AddScatter(xs, ys,System.Drawing.Color.Blue);
             Guid path_url = Guid.NewGuid();
             Console.WriteLine(path_url);
             plt.SaveFig("Trade_images/"+ path_url.ToString() + ".png");
